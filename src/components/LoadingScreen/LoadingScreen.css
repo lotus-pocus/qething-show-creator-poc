@@ -1,0 +1,127 @@
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: #f4f0ff;
+}
+
+.loading-screen__phone-shell {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 430px);
+  min-height: calc(100vh - 40px);
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 36px;
+  background: #090909;
+  color: #ffffff;
+}
+
+.loading-screen__logo {
+  width: 120px;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.loading-screen__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.loading-screen__spinner {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 28px;
+  border: 8px solid rgba(255, 255, 255, 0.16);
+  border-top-color: #ff00c8;
+  border-radius: 50%;
+  animation: loading-screen-spin 900ms linear infinite;
+}
+
+.loading-screen__eyebrow {
+  margin: 0 0 12px;
+  color: #ff00c8;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.loading-screen__title {
+  max-width: 320px;
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.loading-screen__message {
+  min-height: 48px;
+  margin: 24px 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.loading-screen__progress {
+  width: min(100%, 310px);
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.loading-screen__progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: #ff00c8;
+  transition: width 450ms ease;
+}
+
+.loading-screen__percentage {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.loading-screen__tagline {
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+@keyframes loading-screen-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .loading-screen {
+    padding: 0;
+    background: #090909;
+  }
+
+  .loading-screen__phone-shell {
+    min-height: 100vh;
+    border-radius: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen__spinner {
+    animation: none;
+  }
+
+  .loading-screen__progress-bar {
+    transition: none;
+  }
+}
