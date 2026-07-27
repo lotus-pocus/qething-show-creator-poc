@@ -1,0 +1,23 @@
+.progress-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 22px 0;
+}
+
+.progress-dots__dot {
+  width: 13px;
+  height: 13px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: #ffffff;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.progress-dots__dot--active {
+  background: #ff00c8;
+  transform: scale(1.25);
+}
