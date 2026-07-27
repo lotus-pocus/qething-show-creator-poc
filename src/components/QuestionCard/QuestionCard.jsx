@@ -1,72 +1,72 @@
 import { useState } from "react";
+import CategorySelector from "../CategorySelector/CategorySelector";
 import OptionButton from "../OptionButton/OptionButton";
 import TextInput from "../TextInput/TextInput";
 import "./QuestionCard.css";
 
 function QuestionCard({ question, value, onChange }) {
-  const standardOptions = question.options ?? [];
+  const options = question.options ?? [];
 
-  const hasSavedCustomAnswer =
+  const valueMatchesOption = options.includes(value);
+
+  const [isCustomSelected, setIsCustomSelected] = useState(
     question.type === "singleSelectWithOther" &&
-    typeof value === "string" &&
-    value.trim() !== "" &&
-    !standardOptions.includes(value);
-
-  const [isOtherSelected, setIsOtherSelected] = useState(
-    hasSavedCustomAnswer,
+      Boolean(value) &&
+      !valueMatchesOption,
   );
 
-  const [customValue, setCustomValue] = useState(
-    hasSavedCustomAnswer ? value : "",
+  const [customAnswer, setCustomAnswer] = useState(
+    question.type === "singleSelectWithOther" &&
+      Boolean(value) &&
+      !valueMatchesOption
+      ? value
+      : "",
   );
 
   function handleOptionSelect(option) {
-    setIsOtherSelected(false);
-    setCustomValue("");
+    setIsCustomSelected(false);
+    setCustomAnswer("");
     onChange(option);
   }
 
-  function handleOtherSelect() {
-    setIsOtherSelected(true);
-    setCustomValue("");
+  function handleCustomSelect() {
+    setIsCustomSelected(true);
 
-    // Keeps the Next button disabled until something is typed.
+    if (customAnswer.trim()) {
+      onChange(customAnswer.trim());
+      return;
+    }
+
     onChange("");
   }
 
-  function handleCustomValueChange(newValue) {
-    setCustomValue(newValue);
-    onChange(newValue);
+  function handleCustomAnswerChange(event) {
+    const newValue = event.target.value;
+
+    setCustomAnswer(newValue);
+    onChange(newValue.trim() ? newValue : "");
   }
 
-  function decreaseNumber() {
+  function handleNumberChange(amount) {
+    const minimum = question.min ?? 1;
+    const maximum = question.max ?? 20;
     const currentValue =
-      value ?? question.defaultValue ?? question.min;
+      typeof value === "number"
+        ? value
+        : question.defaultValue ?? minimum;
 
-    const newValue = Math.max(
-      question.min,
-      currentValue - 1,
+    const updatedValue = Math.min(
+      maximum,
+      Math.max(minimum, currentValue + amount),
     );
 
-    onChange(newValue);
-  }
-
-  function increaseNumber() {
-    const currentValue =
-      value ?? question.defaultValue ?? question.min;
-
-    const newValue = Math.min(
-      question.max,
-      currentValue + 1,
-    );
-
-    onChange(newValue);
+    onChange(updatedValue);
   }
 
   function renderSingleSelect() {
     return (
       <div className="question-card__options">
-        {standardOptions.map((option) => (
+        {options.map((option) => (
           <OptionButton
             key={option}
             label={option}
@@ -82,28 +82,25 @@ function QuestionCard({ question, value, onChange }) {
     return (
       <>
         <div className="question-card__options">
-          {standardOptions.map((option) => (
+          {options.map((option) => (
             <OptionButton
               key={option}
               label={option}
               selected={
-                !isOtherSelected && value === option
+                !isCustomSelected && value === option
               }
               onClick={() => handleOptionSelect(option)}
             />
           ))}
 
           <OptionButton
-            label={
-              question.otherLabel ??
-              "Something else…"
-            }
-            selected={isOtherSelected}
-            onClick={handleOtherSelect}
+            label={question.otherLabel ?? "✨ My Own"}
+            selected={isCustomSelected}
+            onClick={handleCustomSelect}
           />
         </div>
 
-        {isOtherSelected && (
+        {isCustomSelected && (
           <div className="question-card__custom-answer">
             <TextInput
               label={
@@ -112,13 +109,11 @@ function QuestionCard({ question, value, onChange }) {
               }
               placeholder={
                 question.otherPlaceholder ??
-                "Type your answer here"
+                "Type your answer"
               }
-              value={customValue}
-              onChange={handleCustomValueChange}
-              maxLength={
-                question.otherMaxLength ?? 80
-              }
+              value={customAnswer}
+              onChange={handleCustomAnswerChange}
+              maxLength={question.maxLength ?? 100}
             />
           </div>
         )}
@@ -127,42 +122,50 @@ function QuestionCard({ question, value, onChange }) {
   }
 
   function renderNumberPicker() {
-    const numberValue =
-      value ?? question.defaultValue ?? question.min;
+    const minimum = question.min ?? 1;
+    const maximum = question.max ?? 20;
+    const displayedValue =
+      typeof value === "number"
+        ? value
+        : question.defaultValue ?? minimum;
 
     return (
       <div className="question-card__number-picker">
         <button
           type="button"
-          className="question-card__number-arrow"
-          onClick={decreaseNumber}
-          disabled={numberValue <= question.min}
-          aria-label="Decrease number of players"
+          className="question-card__number-button"
+          onClick={() => handleNumberChange(-1)}
+          disabled={displayedValue <= minimum}
+          aria-label="Decrease number"
         >
-          ←
+          −
         </button>
 
         <div
-          className="question-card__number-display"
+          className="question-card__number-value"
           aria-live="polite"
         >
-          {numberValue}
+          <span>{displayedValue}</span>
+
+          {question.numberLabel && (
+            <small>{question.numberLabel}</small>
+          )}
         </div>
 
         <button
           type="button"
-          className="question-card__number-arrow"
-          onClick={increaseNumber}
-          disabled={numberValue >= question.max}
-          aria-label="Increase number of players"
+          className="question-card__number-button"
+          onClick={() => handleNumberChange(1)}
+          disabled={displayedValue >= maximum}
+          aria-label="Increase number"
         >
-          →
+          +
         </button>
       </div>
     );
   }
 
-  function renderQuestionContent() {
+  function renderQuestionInput() {
     switch (question.type) {
       case "singleSelect":
         return renderSingleSelect();
@@ -173,10 +176,18 @@ function QuestionCard({ question, value, onChange }) {
       case "numberPicker":
         return renderNumberPicker();
 
+      case "categorySelect":
+        return (
+          <CategorySelector
+            value={value}
+            onChange={onChange}
+          />
+        );
+
       default:
         return (
           <p className="question-card__error">
-            Question type not supported.
+            This question type is not supported yet.
           </p>
         );
     }
@@ -184,23 +195,25 @@ function QuestionCard({ question, value, onChange }) {
 
   return (
     <section className="question-card">
-      <h2 className="question-card__title">
-        {question.title}
-      </h2>
+      <div className="question-card__heading">
+        {question.eyebrow && (
+          <p className="question-card__eyebrow">
+            {question.eyebrow}
+          </p>
+        )}
 
-      {question.description && (
-        <p className="question-card__description">
-          {question.description}
-        </p>
-      )}
+        <h2 className="question-card__title">
+          {question.title}
+        </h2>
 
-      {renderQuestionContent()}
+        {question.description && (
+          <p className="question-card__description">
+            {question.description}
+          </p>
+        )}
+      </div>
 
-      {question.helperText && (
-        <p className="question-card__helper">
-          {question.helperText}
-        </p>
-      )}
+      {renderQuestionInput()}
     </section>
   );
 }
