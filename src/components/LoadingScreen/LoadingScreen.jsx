@@ -1,71 +1,58 @@
 import { useEffect, useState } from "react";
 import qethingLogo from "../../assets/images/qething-logo.png";
-import "./LoadingScreen.css";
 
 const loadingMessages = [
-  "Understanding your occasion…",
-  "Choosing the perfect rounds…",
-  "Adding some QEthing energy…",
-  "Balancing the competition…",
-  "Preparing your grand finale…",
+  "Understanding your audience...",
+  "Mixing your interests...",
+  "Finding great rounds...",
+  "Balancing the difficulty...",
+  "Adding a few surprises...",
+  "Putting on the finishing touches...",
 ];
 
-function LoadingScreen() {
+function LoadingScreen({ answers = {} }) {
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
-    const messageTimer = window.setInterval(() => {
-      setMessageIndex((currentIndex) => {
-        const nextIndex = currentIndex + 1;
-
-        if (nextIndex >= loadingMessages.length) {
-          return currentIndex;
-        }
-
-        return nextIndex;
-      });
-    }, 700);
+    const intervalId = window.setInterval(() => {
+      setMessageIndex((currentIndex) =>
+        Math.min(currentIndex + 1, loadingMessages.length - 1),
+      );
+    }, 650);
 
     return () => {
-      window.clearInterval(messageTimer);
+      window.clearInterval(intervalId);
     };
   }, []);
 
-  const progress =
-    ((messageIndex + 1) / loadingMessages.length) * 100;
+  const progress = ((messageIndex + 1) / loadingMessages.length) * 100;
 
   return (
-    <main className="loading-screen">
-      <div className="loading-screen__phone-shell">
-        <img
-          className="loading-screen__logo"
-          src={qethingLogo}
-          alt="QEthing"
-        />
+    <main className="show-creator">
+      <div className="show-creator__phone-shell show-creator__phone-shell--loading">
+        <header className="show-creator__header">
+          <img className="show-creator__logo" src={qethingLogo} alt="QEthing" />
 
-        <div className="loading-screen__content">
-          <div
-            className="loading-screen__spinner"
-            aria-hidden="true"
-          />
+          <h1 className="show-creator__heading">Show Creator</h1>
+        </header>
 
-          <p className="loading-screen__eyebrow">
-            Creating your show
-          </p>
+        <section className="build-loading">
+          <div className="build-loading__stage">
+            <div className="build-loading__spotlight" />
 
-          <h1 className="loading-screen__title">
-            Making something brilliant…
-          </h1>
+            <div className="build-loading__orb">
+              <span>✨</span>
+            </div>
+          </div>
 
-          <p
-            className="loading-screen__message"
-            aria-live="polite"
-          >
+          <p className="build-loading__eyebrow">Creating your show</p>
+
+          <h2 className="build-loading__title">
             {loadingMessages[messageIndex]}
-          </p>
+          </h2>
 
           <div
-            className="loading-screen__progress"
+            className="build-loading__track"
             role="progressbar"
             aria-label="Show creation progress"
             aria-valuemin="0"
@@ -73,19 +60,21 @@ function LoadingScreen() {
             aria-valuenow={Math.round(progress)}
           >
             <div
-              className="loading-screen__progress-bar"
-              style={{ width: `${progress}%` }}
+              className="build-loading__progress"
+              style={{
+                width: `${progress}%`,
+              }}
             />
           </div>
 
-          <p className="loading-screen__percentage">
-            {Math.round(progress)}%
+          <p className="build-loading__summary">
+            {answers.buildType === "Blind Build"
+              ? "Expect the unexpected."
+              : "We’re turning your choices into a complete QEthing show."}
           </p>
-        </div>
+        </section>
 
-        <p className="loading-screen__tagline">
-          — We’ll make your show —
-        </p>
+        <p className="show-creator__tagline">— Stand by for showtime —</p>
       </div>
     </main>
   );

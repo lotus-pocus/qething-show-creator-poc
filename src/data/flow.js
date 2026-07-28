@@ -1,85 +1,494 @@
+const isQuickOrTailored = (answers) =>
+  answers.buildType === "Quick Build" ||
+  answers.buildType === "Tailored Show";
+
+const isTailored = (answers) =>
+  answers.buildType === "Tailored Show";
+
 const flow = [
   {
-    id: "occasion",
-    title: "What are you creating?",
-    type: "singleSelectWithOther",
-    options: ["Birthday", "Work Event", "Party", "Themed Night"],
-    otherLabel: "✨ My Own",
-    otherInputLabel: "What are you planning?",
-    otherPlaceholder: "For example, a family reunion",
-    otherMaxLength: 60,
+    id: "buildType",
+    type: "buildType",
+    eyebrow: "Welcome, showmaker",
+    title: "Let's build your show",
+    description:
+      "Choose how involved you want to be.",
+    options: [
+      {
+        value: "Quick Build",
+        icon: "⚡",
+        label: "Quick Build",
+        description:
+          "Three quick choices. Ready in seconds.",
+        badge: "Fastest",
+      },
+      {
+        value: "Tailored Show",
+        icon: "🎯",
+        label: "Tailored Show",
+        description:
+          "Tell us about your group and what they love.",
+        badge: "Most personal",
+      },
+      {
+        value: "Blind Build",
+        icon: "🎲",
+        label: "Blind Build",
+        description:
+          "No peeking. We decide everything.",
+        badge: "Big surprise",
+      },
+    ],
   },
 
   {
-    id: "buildType",
-    title: "How would you like to build it?",
-    type: "singleSelect",
-    options: ["Quick Build", "Tailored Show", "Blind Build"],
+    id: "occasion",
+    type: "singleSelectWithOther",
+    eyebrow: "Set the scene",
+    title: "What's the occasion?",
+    description:
+      "We’ll use this to give the show the right flavour.",
+    icon: "🎉",
+    options: [
+      {
+        value: "Birthday",
+        icon: "🎂",
+        label: "Birthday",
+      },
+      {
+        value: "Work Event",
+        icon: "💼",
+        label: "Work Event",
+      },
+      {
+        value: "Party",
+        icon: "🥳",
+        label: "Party",
+      },
+      {
+        value: "Themed Night",
+        icon: "✨",
+        label: "Themed Night",
+      },
+    ],
+    otherLabel: "Something else",
+    otherPlaceholder:
+      "For example, a family reunion",
+    showWhen: isQuickOrTailored,
   },
 
   {
     id: "workEventType",
-    title: "What kind of work event?",
     type: "singleSelectWithOther",
-    options: ["Retirement", "Team Social", "Awards Night", "Leaving Party"],
-    otherLabel: "✨ Something Different",
-    otherInputLabel: "Tell us what you're planning",
-    otherPlaceholder: "For example, a company away day",
-    showWhen: (answers) => answers.occasion === "Work Event",
+    eyebrow: "Tell us more",
+    title: "What kind of work event?",
+    description:
+      "We’ll keep the tone right for the room.",
+    icon: "💼",
+    options: [
+      {
+        value: "Team Social",
+        icon: "🤝",
+        label: "Team Social",
+      },
+      {
+        value: "Awards Night",
+        icon: "🏆",
+        label: "Awards Night",
+      },
+      {
+        value: "Leaving Party",
+        icon: "👋",
+        label: "Leaving Party",
+      },
+      {
+        value: "Retirement",
+        icon: "🎊",
+        label: "Retirement",
+      },
+    ],
+    otherLabel: "Something different",
+    otherPlaceholder:
+      "For example, a company away day",
+    showWhen: (answers) =>
+      isQuickOrTailored(answers) &&
+      answers.occasion === "Work Event",
   },
 
   {
     id: "partyType",
-    title: "What kind of party?",
     type: "singleSelectWithOther",
-    options: ["BBQ", "House Party", "Dinner Party", "Christmas Party"],
-    otherLabel: "✨ My Own",
-    otherInputLabel: "Tell us about it",
-    otherPlaceholder: "For example, a midsummer garden party",
-    showWhen: (answers) => answers.occasion === "Party",
+    eyebrow: "Tell us more",
+    title: "What kind of party?",
+    description:
+      "Every party needs a different kind of energy.",
+    icon: "🥳",
+    options: [
+      {
+        value: "House Party",
+        icon: "🏠",
+        label: "House Party",
+      },
+      {
+        value: "Dinner Party",
+        icon: "🍽️",
+        label: "Dinner Party",
+      },
+      {
+        value: "BBQ",
+        icon: "🔥",
+        label: "BBQ",
+      },
+      {
+        value: "Christmas Party",
+        icon: "🎄",
+        label: "Christmas Party",
+      },
+    ],
+    otherLabel: "Something different",
+    otherPlaceholder:
+      "For example, a garden party",
+    showWhen: (answers) =>
+      isQuickOrTailored(answers) &&
+      answers.occasion === "Party",
   },
 
   {
     id: "theme",
-    title: "Choose your theme",
     type: "singleSelectWithOther",
-    options: ["90s Video Games", "Movies", "Music", "Sport"],
-    otherLabel: "✨ My Own Theme",
-    otherInputLabel: "What theme do you have in mind?",
-    otherPlaceholder: "For example, space adventure",
-    showWhen: (answers) => answers.occasion === "Themed Night",
+    eyebrow: "Choose your world",
+    title: "What's the theme?",
+    description:
+      "We’ll weave it through the whole show.",
+    icon: "✨",
+    options: [
+      {
+        value: "90s Video Games",
+        icon: "🕹️",
+        label: "90s Games",
+      },
+      {
+        value: "Movies",
+        icon: "🎬",
+        label: "Movies",
+      },
+      {
+        value: "Music",
+        icon: "🎵",
+        label: "Music",
+      },
+      {
+        value: "Sport",
+        icon: "⚽",
+        label: "Sport",
+      },
+    ],
+    otherLabel: "Create my own theme",
+    otherPlaceholder:
+      "For example, space adventure",
+    showWhen: (answers) =>
+      isQuickOrTailored(answers) &&
+      answers.occasion === "Themed Night",
   },
 
   {
     id: "audience",
-    title: "Who will be playing?",
     type: "singleSelect",
-    options: ["Friends", "Family", "Colleagues", "Mixed Group"],
-    showWhen: (answers) => answers.buildType === "Tailored Show",
+    eyebrow: "Meet the cast",
+    title: "Who's joining you?",
+    description:
+      "Tell us who will be in the room.",
+    icon: "👥",
+    options: [
+      {
+        value: "Friends",
+        icon: "😄",
+        label: "Friends",
+      },
+      {
+        value: "Family",
+        icon: "🏡",
+        label: "Family",
+      },
+      {
+        value: "Colleagues",
+        icon: "💼",
+        label: "Colleagues",
+      },
+      {
+        value: "Mixed Group",
+        icon: "🌈",
+        label: "Mixed Group",
+      },
+    ],
+    showWhen: isTailored,
+  },
+
+  {
+    id: "playerCount",
+    type: "numberPicker",
+    eyebrow: "Fill the studio",
+    title: "How many players?",
+    description:
+      "A rough number is absolutely fine.",
+    icon: "8",
+    min: 2,
+    max: 20,
+    defaultValue: 8,
+  },
+
+  {
+    id: "experienceLevel",
+    type: "singleSelect",
+    eyebrow: "Set the challenge",
+    title:
+      "How much of a challenge should it be?",
+    description:
+      "We’ll balance the show so everyone stays involved.",
+    icon: "🧠",
+    options: [
+      {
+        value: "Easy Going",
+        icon: "🌱",
+        label: "Easy Going",
+        description:
+          "Relaxed and welcoming for first-timers.",
+      },
+      {
+        value: "Balanced Challenge",
+        icon: "⚖️",
+        label: "Balanced Challenge",
+        description:
+          "A mix of easier and tougher moments.",
+      },
+      {
+        value: "Bring It On",
+        icon: "🏆",
+        label: "Bring It On!",
+        description:
+          "A proper challenge for quiz lovers.",
+      },
+    ],
+    showWhen: isTailored,
+  },
+
+  {
+    id: "energyLevel",
+    type: "singleSelect",
+    eyebrow: "Turn up the energy",
+    title: "What's the vibe?",
+    description:
+      "Choose how you want the room to feel.",
+    icon: "⚡",
+    options: [
+      {
+        value: "Quiz Focused",
+        icon: "🧠",
+        label: "Quiz Focused",
+        description:
+          "More questions. Less chaos.",
+      },
+      {
+        value: "Classic QEthing",
+        icon: "😄",
+        label: "Classic QEthing",
+        description:
+          "A lively mix of trivia and games.",
+      },
+      {
+        value: "Full Chaos",
+        icon: "🔥",
+        label: "Full Chaos",
+        description:
+          "Fast, silly and unpredictable.",
+      },
+    ],
+    showWhen: isQuickOrTailored,
   },
 
   {
     id: "categories",
     type: "categorySelect",
-    title: "What would your group enjoy?",
-    description: "Pick up to five favourites, or let QEthing surprise you.",
-    showWhen: (answers) => answers.buildType !== "Blind Build",
+    eyebrow: "Choose the favourites",
+    title: "What does your group love?",
+    description:
+      "Choose up to five. We’ll fill in the gaps.",
+    icon: "❤️",
+    maxSelections: 5,
+    showWhen: isTailored,
   },
 
   {
-    id: "playerCount",
-    title: "Number of Players",
-    type: "numberPicker",
-    min: 2,
-    max: 12,
-    defaultValue: 8,
+    id: "roundTypes",
+    type: "multiSelect",
+    eyebrow: "Shape the action",
+    title: "Which rounds sound fun?",
+    description:
+      "Choose as many as you like.",
+    icon: "🎮",
+    minimumSelections: 1,
+    options: [
+      {
+        value: "Trivia",
+        icon: "🧠",
+        label: "Trivia",
+      },
+      {
+        value: "Music",
+        icon: "🎵",
+        label: "Music",
+      },
+      {
+        value: "Picture Rounds",
+        icon: "🖼️",
+        label: "Pictures",
+      },
+      {
+        value: "Physical Challenges",
+        icon: "🏃",
+        label: "Physical",
+      },
+      {
+        value: "Bluffing",
+        icon: "🤥",
+        label: "Bluffing",
+      },
+      {
+        value: "Drawing",
+        icon: "✏️",
+        label: "Drawing",
+      },
+      {
+        value: "Photo Challenges",
+        icon: "📸",
+        label: "Photos",
+      },
+      {
+        value: "Team Games",
+        icon: "🤝",
+        label: "Team Games",
+      },
+    ],
+    showWhen: isTailored,
   },
 
   {
-    id: "energyLevel",
-    title: "Choose the energy level",
+    id: "avoid",
+    type: "multiSelect",
+    eyebrow: "Keep everyone happy",
+    title:
+      "Anything you'd rather avoid?",
+    description: "This step is optional.",
+    icon: "🚫",
+    optional: true,
+    options: [
+      {
+        value: "Singing",
+        icon: "🎤",
+        label: "Singing",
+      },
+      {
+        value: "Sport",
+        icon: "⚽",
+        label: "Sport",
+      },
+      {
+        value: "Embarrassing Games",
+        icon: "😳",
+        label: "Embarrassing",
+      },
+      {
+        value: "Physical Activity",
+        icon: "🏃",
+        label: "Running Around",
+      },
+      {
+        value: "Timed Rounds",
+        icon: "⏱️",
+        label: "Timed Rounds",
+      },
+      {
+        value: "Nothing",
+        icon: "✅",
+        label: "Nothing",
+      },
+    ],
+    showWhen: isTailored,
+  },
+
+  {
+    id: "showStyle",
     type: "singleSelect",
-    options: ["Quiz Focused", "Classic QEthing", "Full Chaos"],
+    eyebrow: "Final direction",
+    title:
+      "What should the show lean towards?",
+    description:
+      "We’ll still mix in plenty of variety.",
+    icon: "🎯",
+    options: [
+      {
+        value: "Trivia & Knowledge",
+        icon: "🧠",
+        label: "Trivia",
+        description:
+          "Questions, puzzles and knowledge.",
+      },
+      {
+        value: "Social & Silly",
+        icon: "😂",
+        label: "Social & Silly",
+        description:
+          "Banter and memorable moments.",
+      },
+      {
+        value: "Games & Challenges",
+        icon: "🎮",
+        label: "Games",
+        description:
+          "Interactive rounds and challenges.",
+      },
+      {
+        value: "A Bit of Everything",
+        icon: "✨",
+        label: "Everything",
+        description:
+          "Give us the complete QEthing mix.",
+      },
+    ],
+    showWhen: isTailored,
+  },
+
+  {
+    id: "duration",
+    type: "singleSelect",
+    eyebrow: "Set the running time",
+    title: "How long should it last?",
+    description:
+      "We’ll choose the right number of rounds.",
+    icon: "⏱️",
+    options: [
+      {
+        value: "20–30 Minutes",
+        icon: "⚡",
+        label: "20–30 mins",
+      },
+      {
+        value: "35–45 Minutes",
+        icon: "🎯",
+        label: "35–45 mins",
+      },
+      {
+        value: "About an Hour",
+        icon: "🎬",
+        label: "About an hour",
+      },
+      {
+        value: "Keep It Flexible",
+        icon: "✨",
+        label: "Keep it flexible",
+      },
+    ],
+    showWhen: isTailored,
   },
 ];
 
