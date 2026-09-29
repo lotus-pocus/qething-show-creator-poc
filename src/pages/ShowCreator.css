@@ -440,6 +440,113 @@
   line-height: 1.25;
 }
 
+/* =======================================================
+   DELEGATE / "YOU DECIDE" OPTION
+   A secondary choice for handing the decision to QEthing.
+   ======================================================= */
+
+.delegate-options {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.option-card--delegate {
+  width: 100%;
+  min-height: 58px;
+
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 10px 16px;
+
+  border: 1px solid rgba(91, 130, 255, 0.42);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(18, 32, 87, 0.76),
+      rgba(13, 4, 43, 0.88)
+    );
+
+  color: #ffffff;
+  text-align: left;
+
+  box-shadow:
+    inset 0 0 13px rgba(52, 104, 255, 0.1),
+    0 5px 12px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+
+.option-card--delegate:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 0, 200, 0.75);
+}
+
+.option-card--delegate .option-card__icon {
+  font-size: 1.35rem;
+}
+
+.option-card--delegate .option-card__label {
+  font-size: 0.76rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.option-card--delegate .option-card__description {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.62rem;
+  line-height: 1.2;
+}
+
+/* Selected state */
+
+.option-card--delegate.option-card--selected {
+  border-color: #ff00c8;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(98, 0, 96, 0.92),
+      rgba(34, 5, 65, 0.96)
+    );
+
+  box-shadow:
+    inset 0 0 16px rgba(255, 0, 200, 0.22),
+    0 0 10px rgba(255, 0, 200, 0.58);
+}
+
+/* Keyboard focus */
+
+.option-card--delegate:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Very small screens */
+
+@media (max-width: 350px) {
+  .option-card--delegate {
+    grid-template-columns: auto 1fr;
+    min-height: 60px;
+    gap: 7px 9px;
+    padding: 9px 12px;
+  }
+
+  .option-card--delegate .option-card__description {
+    grid-column: 2;
+  }
+}
+
 .option-card--compact {
   min-height: 78px;
   padding: 9px 6px;

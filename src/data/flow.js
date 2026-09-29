@@ -1,9 +1,7 @@
 const isQuickOrTailored = (answers) =>
-  answers.buildType === "Quick Build" ||
-  answers.buildType === "Tailored Show";
+  answers.buildType === "Quick Build" || answers.buildType === "Tailored Show";
 
-const isTailored = (answers) =>
-  answers.buildType === "Tailored Show";
+const isTailored = (answers) => answers.buildType === "Tailored Show";
 
 const flow = [
   {
@@ -11,31 +9,27 @@ const flow = [
     type: "buildType",
     eyebrow: "Welcome, showmaker",
     title: "Let's build your show",
-    description:
-      "Choose how involved you want to be.",
+    description: "Choose how involved you want to be.",
     options: [
       {
         value: "Quick Build",
         icon: "⚡",
         label: "Quick Build",
-        description:
-          "Three quick choices. Ready in seconds.",
+        description: "Three quick choices. Ready in seconds.",
         badge: "Fastest",
       },
       {
         value: "Tailored Show",
         icon: "🎯",
         label: "Tailored Show",
-        description:
-          "Tell us about your group and what they love.",
+        description: "Tell us about your group and what they love.",
         badge: "Most personal",
       },
       {
         value: "Blind Build",
         icon: "🎲",
         label: "Blind Build",
-        description:
-          "No peeking. We decide everything.",
+        description: "No peeking. We decide everything.",
         badge: "Big surprise",
       },
     ],
@@ -46,8 +40,7 @@ const flow = [
     type: "singleSelectWithOther",
     eyebrow: "Set the scene",
     title: "What's the occasion?",
-    description:
-      "We’ll use this to give the show the right flavour.",
+    description: "We’ll use this to give the show the right flavour.",
     icon: "🎉",
     options: [
       {
@@ -70,10 +63,15 @@ const flow = [
         icon: "✨",
         label: "Themed Night",
       },
+      {
+        value: "Just Playing",
+        icon: "🎮",
+        label: "Just Playing",
+      },
     ],
-    otherLabel: "Something else",
-    otherPlaceholder:
-      "For example, a family reunion",
+    otherLabel: "My Occasion",
+    otherInputLabel: "What's the occasion?",
+    otherPlaceholder: "For example, a family reunion",
     showWhen: isQuickOrTailored,
   },
 
@@ -82,8 +80,7 @@ const flow = [
     type: "singleSelectWithOther",
     eyebrow: "Tell us more",
     title: "What kind of work event?",
-    description:
-      "We’ll keep the tone right for the room.",
+    description: "We’ll keep the tone right for the room.",
     icon: "💼",
     options: [
       {
@@ -108,11 +105,9 @@ const flow = [
       },
     ],
     otherLabel: "Something different",
-    otherPlaceholder:
-      "For example, a company away day",
+    otherPlaceholder: "For example, a company away day",
     showWhen: (answers) =>
-      isQuickOrTailored(answers) &&
-      answers.occasion === "Work Event",
+      isQuickOrTailored(answers) && answers.occasion === "Work Event",
   },
 
   {
@@ -120,8 +115,7 @@ const flow = [
     type: "singleSelectWithOther",
     eyebrow: "Tell us more",
     title: "What kind of party?",
-    description:
-      "Every party needs a different kind of energy.",
+    description: "Every party needs a different kind of energy.",
     icon: "🥳",
     options: [
       {
@@ -146,11 +140,9 @@ const flow = [
       },
     ],
     otherLabel: "Something different",
-    otherPlaceholder:
-      "For example, a garden party",
+    otherPlaceholder: "For example, a garden party",
     showWhen: (answers) =>
-      isQuickOrTailored(answers) &&
-      answers.occasion === "Party",
+      isQuickOrTailored(answers) && answers.occasion === "Party",
   },
 
   {
@@ -158,8 +150,7 @@ const flow = [
     type: "singleSelectWithOther",
     eyebrow: "Choose your world",
     title: "What's the theme?",
-    description:
-      "We’ll weave it through the whole show.",
+    description: "We’ll weave it through the whole show.",
     icon: "✨",
     options: [
       {
@@ -184,11 +175,9 @@ const flow = [
       },
     ],
     otherLabel: "Create my own theme",
-    otherPlaceholder:
-      "For example, space adventure",
+    otherPlaceholder: "For example, space adventure",
     showWhen: (answers) =>
-      isQuickOrTailored(answers) &&
-      answers.occasion === "Themed Night",
+      isQuickOrTailored(answers) && answers.occasion === "Themed Night",
   },
 
   {
@@ -196,8 +185,7 @@ const flow = [
     type: "singleSelect",
     eyebrow: "Meet the cast",
     title: "Who's joining you?",
-    description:
-      "Tell us who will be in the room.",
+    description: "Tell us who will be in the room.",
     icon: "👥",
     options: [
       {
@@ -220,53 +208,65 @@ const flow = [
         icon: "🌈",
         label: "Mixed Group",
       },
+      {
+        value: "You Decide",
+        icon: "🎲",
+        label: "You decide",
+        description: "Just make us a great show",
+        delegate: true,
+      },
     ],
     showWhen: isTailored,
   },
 
   {
-    id: "playerCount",
-    type: "numberPicker",
+    id: "gameSize",
+    type: "singleSelect",
     eyebrow: "Fill the studio",
-    title: "How many players?",
-    description:
-      "A rough number is absolutely fine.",
-    icon: "8",
-    min: 2,
-    max: 20,
-    defaultValue: 8,
+    title: "How big's the crowd?",
+    description: "We’ll set up the right game for your group.",
+    icon: "👥",
+    options: [
+      {
+        value: "Small Game",
+        icon: "👥",
+        label: "Small Game",
+        description: "Up to 16 players",
+      },
+      {
+        value: "Big Game",
+        icon: "🎉",
+        label: "Big Game",
+        description: "17+ players",
+      },
+    ],
   },
 
   {
     id: "experienceLevel",
     type: "singleSelect",
     eyebrow: "Set the challenge",
-    title:
-      "How much of a challenge should it be?",
-    description:
-      "We’ll balance the show so everyone stays involved.",
+    title: "How much of a challenge should it be?",
+    description: "We’ll balance the show so everyone stays involved.",
     icon: "🧠",
     options: [
       {
         value: "Easy Going",
         icon: "🌱",
         label: "Easy Going",
-        description:
-          "Relaxed and welcoming for first-timers.",
+        description: "Relaxed and welcoming for first-timers.",
       },
       {
         value: "Balanced Challenge",
         icon: "⚖️",
         label: "Balanced Challenge",
-        description:
-          "A mix of easier and tougher moments.",
+        description: "A mix of easier and tougher moments.",
       },
       {
         value: "Bring It On",
         icon: "🏆",
         label: "Bring It On!",
-        description:
-          "A proper challenge for quiz lovers.",
+        description: "A proper challenge for quiz lovers.",
       },
     ],
     showWhen: isTailored,
@@ -277,30 +277,26 @@ const flow = [
     type: "singleSelect",
     eyebrow: "Turn up the energy",
     title: "What's the vibe?",
-    description:
-      "Choose how you want the room to feel.",
+    description: "Choose how you want the room to feel.",
     icon: "⚡",
     options: [
       {
         value: "Quiz Focused",
         icon: "🧠",
         label: "Quiz Focused",
-        description:
-          "More questions. Less chaos.",
+        description: "More questions. Less chaos.",
       },
       {
         value: "Classic QEthing",
         icon: "😄",
         label: "Classic QEthing",
-        description:
-          "A lively mix of trivia and games.",
+        description: "A lively mix of trivia and games.",
       },
       {
         value: "Full Chaos",
         icon: "🔥",
         label: "Full Chaos",
-        description:
-          "Fast, silly and unpredictable.",
+        description: "Fast, silly and unpredictable.",
       },
     ],
     showWhen: isQuickOrTailored,
@@ -311,8 +307,7 @@ const flow = [
     type: "categorySelect",
     eyebrow: "Choose the favourites",
     title: "What does your group love?",
-    description:
-      "Choose up to five. We’ll fill in the gaps.",
+    description: "Choose up to five. We’ll fill in the gaps.",
     icon: "❤️",
     maxSelections: 5,
     showWhen: isTailored,
@@ -323,8 +318,7 @@ const flow = [
     type: "multiSelect",
     eyebrow: "Shape the action",
     title: "Which rounds sound fun?",
-    description:
-      "Choose as many as you like.",
+    description: "Choose as many as you like.",
     icon: "🎮",
     minimumSelections: 1,
     options: [
@@ -376,8 +370,7 @@ const flow = [
     id: "avoid",
     type: "multiSelect",
     eyebrow: "Keep everyone happy",
-    title:
-      "Anything you'd rather avoid?",
+    title: "Anything you'd rather avoid?",
     description: "This step is optional.",
     icon: "🚫",
     optional: true,
@@ -420,39 +413,33 @@ const flow = [
     id: "showStyle",
     type: "singleSelect",
     eyebrow: "Final direction",
-    title:
-      "What should the show lean towards?",
-    description:
-      "We’ll still mix in plenty of variety.",
+    title: "What should the show lean towards?",
+    description: "We’ll still mix in plenty of variety.",
     icon: "🎯",
     options: [
       {
         value: "Trivia & Knowledge",
         icon: "🧠",
         label: "Trivia",
-        description:
-          "Questions, puzzles and knowledge.",
+        description: "Questions, puzzles and knowledge.",
       },
       {
         value: "Social & Silly",
         icon: "😂",
         label: "Social & Silly",
-        description:
-          "Banter and memorable moments.",
+        description: "Banter and memorable moments.",
       },
       {
         value: "Games & Challenges",
         icon: "🎮",
         label: "Games",
-        description:
-          "Interactive rounds and challenges.",
+        description: "Interactive rounds and challenges.",
       },
       {
         value: "A Bit of Everything",
         icon: "✨",
         label: "Everything",
-        description:
-          "Give us the complete QEthing mix.",
+        description: "Give us the complete QEthing mix.",
       },
     ],
     showWhen: isTailored,
@@ -463,8 +450,7 @@ const flow = [
     type: "singleSelect",
     eyebrow: "Set the running time",
     title: "How long should it last?",
-    description:
-      "We’ll choose the right number of rounds.",
+    description: "We’ll choose the right number of rounds.",
     icon: "⏱️",
     options: [
       {
