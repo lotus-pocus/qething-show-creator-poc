@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "./MakeItYours.css";
 
 const MAX_TITLE_LENGTH = 50;
@@ -12,22 +12,6 @@ function MakeItYours({ value, onChange }) {
     imageName: "",
     ...(value && typeof value === "object" ? value : {}),
   };
-
-  /*
-   * Object URLs are only needed for this POC so that a locally
-   * selected image can be previewed without uploading it anywhere.
-   *
-   * Revoke the current blob URL when the component finally unmounts.
-   */
-  useEffect(() => {
-    return () => {
-      if (personalisation.imageUrl?.startsWith("blob:")) {
-        URL.revokeObjectURL(personalisation.imageUrl);
-      }
-    };
-    // We deliberately only want this cleanup when this instance unmounts.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   function updatePersonalisation(changes) {
     onChange({
@@ -57,23 +41,19 @@ function MakeItYours({ value, onChange }) {
       return;
     }
 
-    if (personalisation.imageUrl?.startsWith("blob:")) {
-      URL.revokeObjectURL(personalisation.imageUrl);
-    }
+    const reader = new FileReader();
 
-    const imageUrl = URL.createObjectURL(file);
+    reader.onload = () => {
+      updatePersonalisation({
+        imageUrl: reader.result,
+        imageName: file.name,
+      });
+    };
 
-    updatePersonalisation({
-      imageUrl,
-      imageName: file.name,
-    });
+    reader.readAsDataURL(file);
   }
 
   function removeImage() {
-    if (personalisation.imageUrl?.startsWith("blob:")) {
-      URL.revokeObjectURL(personalisation.imageUrl);
-    }
-
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -138,7 +118,10 @@ function MakeItYours({ value, onChange }) {
           >
             <span className="make-it-yours__upload-glow" />
 
-            <span className="make-it-yours__upload-icon" aria-hidden="true">
+            <span
+              className="make-it-yours__upload-icon"
+              aria-hidden="true"
+            >
               📸
             </span>
 
@@ -147,7 +130,10 @@ function MakeItYours({ value, onChange }) {
               <small>Give your show its own cover</small>
             </span>
 
-            <span className="make-it-yours__upload-plus" aria-hidden="true">
+            <span
+              className="make-it-yours__upload-plus"
+              aria-hidden="true"
+            >
               +
             </span>
           </button>
