@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import AddInterestCard from "../AddInterestCard/AddInterestCard";
 import InterestBuilder from "../InterestBuilder/InterestBuilder";
+import MakeItYours from "../MakeItYours/MakeItYours";
 
 function getOptionValue(option) {
   return typeof option === "string" ? option : option.value;
@@ -483,6 +484,14 @@ function QuestionRenderer({
           value={value}
           onChange={onChange}
           onNestedViewChange={onNestedViewChange}
+        />
+      );
+
+    case "makeItYours":
+      return (
+        <MakeItYours
+          value={value}
+          onChange={onChange}
         />
       );
 

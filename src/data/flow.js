@@ -75,111 +75,7 @@ const flow = [
     showWhen: isQuickOrTailored,
   },
 
-  {
-    id: "workEventType",
-    type: "singleSelectWithOther",
-    eyebrow: "Tell us more",
-    title: "What kind of work event?",
-    description: "We’ll keep the tone right for the room.",
-    icon: "💼",
-    options: [
-      {
-        value: "Team Social",
-        icon: "🤝",
-        label: "Team Social",
-      },
-      {
-        value: "Awards Night",
-        icon: "🏆",
-        label: "Awards Night",
-      },
-      {
-        value: "Leaving Party",
-        icon: "👋",
-        label: "Leaving Party",
-      },
-      {
-        value: "Retirement",
-        icon: "🎊",
-        label: "Retirement",
-      },
-    ],
-    otherLabel: "Something different",
-    otherPlaceholder: "For example, a company away day",
-    showWhen: (answers) =>
-      isQuickOrTailored(answers) && answers.occasion === "Work Event",
-  },
-
-  {
-    id: "partyType",
-    type: "singleSelectWithOther",
-    eyebrow: "Tell us more",
-    title: "What kind of party?",
-    description: "Every party needs a different kind of energy.",
-    icon: "🥳",
-    options: [
-      {
-        value: "House Party",
-        icon: "🏠",
-        label: "House Party",
-      },
-      {
-        value: "Dinner Party",
-        icon: "🍽️",
-        label: "Dinner Party",
-      },
-      {
-        value: "BBQ",
-        icon: "🔥",
-        label: "BBQ",
-      },
-      {
-        value: "Christmas Party",
-        icon: "🎄",
-        label: "Christmas Party",
-      },
-    ],
-    otherLabel: "Something different",
-    otherPlaceholder: "For example, a garden party",
-    showWhen: (answers) =>
-      isQuickOrTailored(answers) && answers.occasion === "Party",
-  },
-
-  {
-    id: "theme",
-    type: "singleSelectWithOther",
-    eyebrow: "Choose your world",
-    title: "What's the theme?",
-    description: "We’ll weave it through the whole show.",
-    icon: "✨",
-    options: [
-      {
-        value: "90s Video Games",
-        icon: "🕹️",
-        label: "90s Games",
-      },
-      {
-        value: "Movies",
-        icon: "🎬",
-        label: "Movies",
-      },
-      {
-        value: "Music",
-        icon: "🎵",
-        label: "Music",
-      },
-      {
-        value: "Sport",
-        icon: "⚽",
-        label: "Sport",
-      },
-    ],
-    otherLabel: "Create my own theme",
-    otherPlaceholder: "For example, space adventure",
-    showWhen: (answers) =>
-      isQuickOrTailored(answers) && answers.occasion === "Themed Night",
-  },
-
+  
   {
     id: "audience",
     type: "singleSelect",
@@ -218,7 +114,17 @@ const flow = [
     ],
     showWhen: isTailored,
   },
-
+  {
+    id: "makeItYours",
+    type: "makeItYours",
+    eyebrow: "Your show",
+    title: "Make it yours",
+    description: "Give your show a name and add a photo if you fancy.",
+    icon: "✨",
+    optional: true,
+    showWhen: isQuickOrTailored,
+  },
+  
   {
     id: "gameSize",
     type: "singleSelect",

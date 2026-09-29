@@ -1,0 +1,414 @@
+.make-it-yours {
+  display: grid;
+  gap: 20px;
+}
+
+.make-it-yours__field {
+  display: grid;
+  gap: 8px;
+}
+
+.make-it-yours__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 3px;
+}
+
+.make-it-yours__label {
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.make-it-yours__optional {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* =======================================================
+   SHOW NAME
+   ======================================================= */
+
+.make-it-yours__input-wrap {
+  position: relative;
+}
+
+.make-it-yours__input {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 54px 14px 15px;
+
+  border: 1px solid rgba(91, 130, 255, 0.52);
+  border-radius: 16px;
+  outline: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 32, 87, 0.86),
+      rgba(13, 4, 43, 0.94)
+    );
+
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+
+  box-shadow:
+    inset 0 0 13px rgba(52, 104, 255, 0.12),
+    0 5px 12px rgba(0, 0, 0, 0.24);
+
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.make-it-yours__input:focus {
+  border-color: #ff00c8;
+
+  box-shadow:
+    inset 0 0 15px rgba(255, 0, 200, 0.14),
+    0 0 10px rgba(255, 0, 200, 0.48);
+}
+
+.make-it-yours__input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 650;
+}
+
+.make-it-yours__count {
+  position: absolute;
+  right: 12px;
+  bottom: 18px;
+
+  color: rgba(255, 255, 255, 0.34);
+
+  font-size: 0.56rem;
+  font-weight: 800;
+
+  pointer-events: none;
+}
+
+/* =======================================================
+   FILE INPUT
+   ======================================================= */
+
+.make-it-yours__file-input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+}
+
+/* =======================================================
+   UPLOAD CARD
+   ======================================================= */
+
+.make-it-yours__upload {
+  position: relative;
+
+  width: 100%;
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 18px;
+
+  overflow: hidden;
+
+  border: 1px dashed rgba(255, 0, 200, 0.68);
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(255, 0, 200, 0.16),
+      transparent 48%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(15, 27, 79, 0.74),
+      rgba(12, 3, 39, 0.92)
+    );
+
+  color: #ffffff;
+
+  font: inherit;
+  text-align: center;
+
+  box-shadow:
+    inset 0 0 22px rgba(52, 104, 255, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.24);
+
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.make-it-yours__upload:hover {
+  transform: translateY(-2px);
+
+  border-color: #ff2bd2;
+
+  box-shadow:
+    inset 0 0 25px rgba(255, 0, 200, 0.12),
+    0 0 13px rgba(255, 0, 200, 0.34);
+}
+
+.make-it-yours__upload:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.make-it-yours__upload-glow {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+
+  width: 100px;
+  height: 100px;
+
+  transform: translateX(-50%);
+
+  border-radius: 50%;
+
+  background: rgba(255, 0, 200, 0.16);
+
+  filter: blur(24px);
+
+  pointer-events: none;
+}
+
+.make-it-yours__upload-icon {
+  position: relative;
+
+  z-index: 1;
+
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255, 0, 200, 0.62);
+  border-radius: 18px;
+
+  background: rgba(8, 7, 48, 0.8);
+
+  font-size: 1.8rem;
+
+  box-shadow:
+    inset 0 0 13px rgba(255, 0, 200, 0.18),
+    0 0 12px rgba(255, 0, 200, 0.22);
+}
+
+.make-it-yours__upload-copy {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.make-it-yours__upload-copy strong {
+  font-size: 0.82rem;
+  font-weight: 1000;
+
+  text-transform: uppercase;
+}
+
+.make-it-yours__upload-copy small {
+  color: rgba(255, 255, 255, 0.56);
+
+  font-size: 0.65rem;
+  font-weight: 650;
+}
+
+.make-it-yours__upload-plus {
+  position: absolute;
+  top: 10px;
+  right: 13px;
+
+  color: #ff42d9;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  text-shadow: 0 0 8px #ff00c8;
+}
+
+/* =======================================================
+   IMAGE PREVIEW
+   ======================================================= */
+
+.make-it-yours__preview {
+  position: relative;
+
+  min-height: 190px;
+
+  overflow: hidden;
+
+  border: 1px solid #ff00c8;
+  border-radius: 22px;
+
+  background: #08051f;
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 0, 200, 0.14),
+    0 0 12px rgba(255, 0, 200, 0.42);
+}
+
+.make-it-yours__preview-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.make-it-yours__preview-shade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 2, 30, 0.05) 35%,
+      rgba(4, 2, 30, 0.88) 100%
+    );
+
+  pointer-events: none;
+}
+
+.make-it-yours__preview-badge {
+  position: absolute;
+  top: 11px;
+  left: 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 6px 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+
+  background: rgba(6, 3, 28, 0.72);
+
+  color: #ffffff;
+
+  font-size: 0.58rem;
+  font-weight: 900;
+
+  text-transform: uppercase;
+
+  backdrop-filter: blur(8px);
+}
+
+.make-it-yours__preview-actions {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+
+  display: flex;
+
+  gap: 7px;
+}
+
+.make-it-yours__image-button {
+  flex: 1;
+
+  min-height: 38px;
+
+  padding: 8px 10px;
+
+  border: 1px solid #ff45d8;
+  border-radius: 11px;
+
+  background: rgba(225, 0, 176, 0.9);
+
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 0.62rem;
+  font-weight: 950;
+
+  text-transform: uppercase;
+
+  box-shadow: 0 0 8px rgba(255, 0, 200, 0.4);
+
+  cursor: pointer;
+}
+
+.make-it-yours__image-button--quiet {
+  border-color: rgba(255, 255, 255, 0.38);
+
+  background: rgba(6, 3, 28, 0.78);
+
+  box-shadow: none;
+}
+
+.make-it-yours__image-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* =======================================================
+   FOOTNOTE
+   ======================================================= */
+
+.make-it-yours__hint {
+  margin: -3px 0 0;
+
+  color: rgba(255, 255, 255, 0.48);
+
+  font-size: 0.64rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 350px) {
+  .make-it-yours {
+    gap: 16px;
+  }
+
+  .make-it-yours__upload {
+    min-height: 135px;
+  }
+
+  .make-it-yours__preview {
+    min-height: 170px;
+  }
+}

@@ -16,6 +16,14 @@ function createInitialAnswers() {
       initialAnswers[question.id] = [];
     }
 
+    if (question.type === "makeItYours") {
+      initialAnswers[question.id] = {
+        title: "",
+        imageUrl: "",
+        imageName: "",
+      };
+    }
+
     return initialAnswers;
   }, {});
 }
@@ -92,17 +100,22 @@ function ShowCreator() {
         [currentQuestion.id]: value,
       };
 
-      if (currentQuestion.id === "occasion") {
-        delete updatedAnswers.workEventType;
-        delete updatedAnswers.partyType;
-        delete updatedAnswers.theme;
-      }
+      /*
+       * Occasion-specific answers should not survive if the
+       * player changes the overall occasion.
+       *
+       * Make It Yours deliberately DOES survive. A player may
+       * simply be correcting their occasion after already
+       * naming their show.
+       */
 
+      /*
+       * Changing build type effectively starts a different
+       * creator journey, so clear answers belonging to the
+       * previous journey.
+       */
       if (currentQuestion.id === "buildType") {
         delete updatedAnswers.occasion;
-        delete updatedAnswers.workEventType;
-        delete updatedAnswers.partyType;
-        delete updatedAnswers.theme;
         delete updatedAnswers.audience;
         delete updatedAnswers.experienceLevel;
         delete updatedAnswers.energyLevel;
@@ -111,6 +124,12 @@ function ShowCreator() {
         delete updatedAnswers.avoid;
         delete updatedAnswers.showStyle;
         delete updatedAnswers.duration;
+
+        updatedAnswers.makeItYours = {
+          title: "",
+          imageUrl: "",
+          imageName: "",
+        };
 
         updatedAnswers.categories = [];
         updatedAnswers.roundTypes = [];
