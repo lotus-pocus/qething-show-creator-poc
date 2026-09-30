@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import AddInterestCard from "../AddInterestCard/AddInterestCard";
 import InterestBuilder from "../InterestBuilder/InterestBuilder";
 import MakeItYours from "../MakeItYours/MakeItYours";
+import AgeRange from "../AgeRange/AgeRange";
 
 function getOptionValue(option) {
   return typeof option === "string" ? option : option.value;
@@ -488,12 +489,10 @@ function QuestionRenderer({
       );
 
     case "makeItYours":
-      return (
-        <MakeItYours
-          value={value}
-          onChange={onChange}
-        />
-      );
+      return <MakeItYours value={value} onChange={onChange} />;
+
+    case "ageRange":
+      return <AgeRange value={value} onChange={onChange} />;
 
     default:
       return (

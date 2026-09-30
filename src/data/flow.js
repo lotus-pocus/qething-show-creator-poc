@@ -75,7 +75,6 @@ const flow = [
     showWhen: isQuickOrTailored,
   },
 
-  
   {
     id: "audience",
     type: "singleSelect",
@@ -124,28 +123,20 @@ const flow = [
     optional: true,
     showWhen: isQuickOrTailored,
   },
-  
+
   {
-    id: "gameSize",
-    type: "singleSelect",
-    eyebrow: "Fill the studio",
-    title: "How big's the crowd?",
-    description: "We’ll set up the right game for your group.",
+    id: "ageRange",
+    type: "ageRange",
+    eyebrow: "Meet the players",
+    title: "Who's playing?",
+    description:
+      "Give us a rough age range and we'll make sure everyone gets a look in.",
     icon: "👥",
-    options: [
-      {
-        value: "Small Game",
-        icon: "👥",
-        label: "Small Game",
-        description: "Up to 16 players",
-      },
-      {
-        value: "Big Game",
-        icon: "🎉",
-        label: "Big Game",
-        description: "17+ players",
-      },
-    ],
+    defaultValue: {
+      min: 20,
+      max: 50,
+    },
+    showWhen: isQuickOrTailored,
   },
 
   {
